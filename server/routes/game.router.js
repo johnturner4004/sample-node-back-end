@@ -17,4 +17,17 @@ router.get('/', (req, res) => {
     })
 })
 
+router.post('/', (req, res) => {
+  const sqlText = `INSERT INTO game_collection (name, date_added)
+    VALUES ($1, $2)`
+  const game = req.body
+  pool.query(sqlText, [game.name, game.date_added])
+  .then(() => {
+    res.sendStatus(201)
+  })
+  .catch(err => {
+    console.error(err)
+  })
+})
+
 export default router
