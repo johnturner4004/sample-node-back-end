@@ -30,4 +30,20 @@ router.post('/', (req, res) => {
   })
 })
 
+router.put('/:id', (req, res) => {
+  const id = req.params.id
+  const game = req.body
+  const sqlText = `UPDATE game_collection
+    SET name = $1, date_added = $2
+    WHERE id = $3`
+  
+  pool.query(sqlText, [game.name, game.date_added, id])
+  .then(() => {
+    res.sendStatus(200)
+  })
+  .catch((err) => {
+    console.error(`Error updating game: ${err}`)
+  })
+})
+
 export default router
