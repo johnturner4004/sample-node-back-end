@@ -46,4 +46,17 @@ router.put('/:id', (req, res) => {
   })
 })
 
+router.delete('/:id', (req, res) => {
+  const id = req.params.id
+  const sqlText = `DELETE FROM game_collection WHERE id = $1;`
+
+  pool.query(sqlText, [id])
+  .then(() => {
+    res.sendStatus(200)
+  })
+  .catch(err => {
+    console.error(`Error deleting game: ${err}`)
+  })
+})
+
 export default router
